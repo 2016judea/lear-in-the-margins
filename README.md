@@ -66,6 +66,19 @@ about $15 ($375). A tenth of ~$350 is ~$35; rounded to $40.
 $13.47 to print; shipping $6-10 and a $1.75 fulfilment fee (reported 2025); Stripe
 2.9% + $0.30 = $1.46. Worst case $26.68, leaving about $13 a copy.
 
+## Outreach (drafts only)
+
+`outreach/mmo-permission-draft.md`: the ask to Melville's Marginalia Online, as a reply
+in the thread they answered on 2026-08-15. Not sent.
+
+`outreach/round1/` (gitignored, names stay off the public repo): `rows.py` holds 50
+hand-verified recipients in three segments (R1 English departments, teaching colleges,
+and Milton / Keats / Melville scholars). Each row's email was read off a page fetched on
+2026-10-16 and each opener quotes the reader's own syllabus, course listing or paper.
+`python3 scripts/build_outreach.py` writes `ledger.csv` and one draft per recipient;
+`python3 scripts/build_for_pages.py` writes the `/for/<token>/` lines, which deploy with
+the site. Nothing sends from here.
+
 ## Analytics
 
 Vercel Web Analytics on the project; `/_vercel/insights/script.js` and the shared
