@@ -1,0 +1,66 @@
+{
+  "_comment": "One entry per play the shop sells. scripts/build_edition.sh <play> reads it. Lear keeps its original paths so links already sent keep working.",
+  "lear": {
+    "moby": "lear",
+    "title": "The Tragedy of King Lear",
+    "short": "King Lear",
+    "annotators": "examples/king-lear/annotators.json",
+    "colophon": "colophon.html",
+    "pdf": "private/king_lear_course.pdf",
+    "cover": "private/cover.pdf",
+    "cover_html": "scripts/cover.html",
+    "site_dir": "",
+    "sample_pages": 14,
+    "spread": [
+      62,
+      63
+    ],
+    "spread2": [
+      28,
+      29
+    ],
+    "pages_img": [
+      3,
+      13,
+      28,
+      29,
+      62,
+      63
+    ],
+    "hero_crop": [
+      60,
+      760
+    ]
+  },
+  "hamlet": {
+    "moby": "hamlet",
+    "title": "The Tragedy of Hamlet, Prince of Denmark",
+    "short": "Hamlet",
+    "annotators": "examples/hamlet/annotators.json",
+    "colophon": "colophon_hamlet.html",
+    "pdf": "private/hamlet_course.pdf",
+    "cover": "private/cover_hamlet.pdf",
+    "cover_html": "scripts/cover_hamlet.html",
+    "site_dir": "hamlet",
+    "sample_pages": 15,
+    "spread": [
+      14,
+      15
+    ],
+    "spread2": [
+      106,
+      107
+    ],
+    "pages_img": [
+      8,
+      14,
+      15,
+      106,
+      107
+    ],
+    "hero_crop": [
+      60,
+      760
+    ]
+  }
+}

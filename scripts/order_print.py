@@ -34,6 +34,9 @@ def main():
         sys.exit(f"not a paid print order: {s.get('metadata')} {s.get('payment_status')}")
     sd = s.get("shipping_details") or (s.get("collected_information") or {}).get("shipping_details") or {}
     a = sd.get("address") or {}
+    play = s.get("metadata", {}).get("play") or "lear"
+    sfx = "" if play == "lear" else f"-{play}"
+    title = {"lear": "King Lear", "hamlet": "Hamlet"}[play] + " in the Margins"
     job = {
         "external_id": sid,
         "contact_email": "aidan@brickandmortar.dev",
@@ -45,10 +48,10 @@ def main():
             "email": (s.get("customer_details") or {}).get("email"),
         },
         "line_items": [{
-            "external_id": sid, "title": "King Lear in the Margins", "quantity": 1,
+            "external_id": sid, "title": title, "quantity": 1,
             "printable_normalization": {"pod_package_id": POD,
-                                        "interior": {"source_url": signed("interior")},
-                                        "cover": {"source_url": signed("cover")}},
+                                        "interior": {"source_url": signed("interior" + sfx)},
+                                        "cover": {"source_url": signed("cover" + sfx)}},
         }],
     }
     if not submit:

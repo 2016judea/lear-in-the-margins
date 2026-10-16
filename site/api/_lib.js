@@ -5,12 +5,19 @@
 //           print-on-demand job (scripts/order_print.py), so no stock is ever held.
 // The password is stateless: XXXX-XXXX-XXXX = a 5-char nonce minted at checkout + a
 // 7-char HMAC of it under ACCESS_SECRET. It unlocks once Stripe says its session paid.
+// Each play signs in its own domain ("" for Lear, so passwords sold before Hamlet still
+// work; "hamlet:" for Hamlet), so a password names its play and opens only that file.
 const crypto = require("crypto");
 const OFFER = require("../offer.json");
 
 const SITE = process.env.SITE_URL || "https://lear-in-the-margins.vercel.app";
 const PRODUCT = "lear-in-the-margins";
 const ALPHA = "23456789BCDFGHJKMNPQRSTVWXYZ";
+const PLAYS = OFFER.plays;
+const play = (p) => (PLAYS[p] ? p : "lear");
+const dom = (p) => (play(p) === "lear" ? "" : `${p}:`);
+const itemName = (p, item) => `${PLAYS[play(p)].short} in the Margins: ${OFFER[item].label}`;
+const itemDesc = (p, item) => OFFER[item].description.replace("{pages}", PLAYS[play(p)].pages);
 
 async function stripe(path, { method = "GET", form } = {}) {
   const k = process.env.STRIPE_SECRET_KEY;
@@ -31,9 +38,9 @@ function mac(nonce, domain = "") {
   if (!s) throw new Error("ACCESS_SECRET is not set");
   return chars(crypto.createHmac("sha256", s).update(domain + nonce).digest(), 7);
 }
-function newPassword() {
+function newPassword(p) {
   const nonce = chars(crypto.randomBytes(5), 5);
-  const raw = nonce + mac(nonce);
+  const raw = nonce + mac(nonce, dom(p));
   return { nonce, password: `${raw.slice(0, 4)}-${raw.slice(4, 8)}-${raw.slice(8)}` };
 }
 const same = (a, b) => a.length === b.length && crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b));
@@ -41,8 +48,10 @@ function checkPassword(pw) {
   const raw = String(pw || "").toUpperCase().replace(/[^0-9A-Z]/g, "");
   if (raw.length !== 12) return null;
   const nonce = raw.slice(0, 5), tail = raw.slice(5);
-  if (same(tail, mac(nonce))) return { nonce, kind: "paid" };
-  if (same(tail, mac(nonce, "comp:"))) return { nonce, kind: "comp" };
+  for (const p of Object.keys(PLAYS)) {
+    if (same(tail, mac(nonce, dom(p)))) return { nonce, kind: "paid", play: p };
+    if (same(tail, mac(nonce, "comp:" + dom(p)))) return { nonce, kind: "comp", play: p };
+  }
   return null;
 }
 
@@ -51,18 +60,19 @@ const LAUNCH = 1792100000; // 2026-10-16; no session of ours is older
 const unlocked = (s) => s.metadata?.product === PRODUCT &&
   (s.payment_status === "paid" || (s.payment_status === "no_payment_required" && s.metadata?.comp === "1"));
 
-async function nonceIsPaid(nonce) {
-  if (paid.get(nonce)) return true;
+const playOf = (meta) => play(meta?.play);
+async function nonceIsPaid(nonce, p = "lear") {
+  if (paid.get(nonce) === p) return true;
   try {
     const q = encodeURIComponent(`metadata['pw_nonce']:'${nonce}' AND status:'succeeded'`);
     const s = await stripe(`payment_intents/search?query=${q}&limit=1`);
-    if (s.data?.length) return paid.set(nonce, true), true;
+    if (s.data?.length && playOf(s.data[0].metadata) === p) return paid.set(nonce, p), true;
   } catch (e) { console.error("[pw] search failed:", e.message); }
   let after = "";
   for (let page = 0; page < 20; page++) {
     const l = await stripe(`checkout/sessions?status=complete&limit=100&created[gte]=${LAUNCH}${after}`);
-    const hit = l.data.find((s) => s.metadata?.pw_nonce === nonce && unlocked(s));
-    if (hit) return paid.set(nonce, true), true;
+    const hit = l.data.find((s) => s.metadata?.pw_nonce === nonce && unlocked(s) && playOf(s.metadata) === p);
+    if (hit) return paid.set(nonce, p), true;
     if (!l.has_more) break;
     after = `&starting_after=${l.data[l.data.length - 1].id}`;
   }
@@ -88,23 +98,25 @@ const wrap = (inner) => `<div style="font:16px/1.55 Georgia,serif;color:#1a1a1a;
 
 function buyerEmail(fresh) {
   const item = fresh.metadata.item;
+  const T = `${PLAYS[playOf(fresh.metadata)].short} in the Margins`;
+  const here = playOf(fresh.metadata) === "lear" ? SITE : `${SITE}/${playOf(fresh.metadata)}`;
   if (item === "print") {
     const a = fresh.shipping_details?.address || fresh.collected_information?.shipping_details?.address || {};
     const where = [a.line1, a.line2, a.city, a.state, a.postal_code].filter(Boolean).join(", ");
-    const text = [`Thanks for ordering a printed King Lear in the Margins.`, ``,
+    const text = [`Thanks for ordering a printed ${T}.`, ``,
       `It is printed to order and ships to: ${where}.`, `I'll email you the tracking number when it leaves the printer, usually within a week.`, ``,
       `Your receipt comes separately from Stripe. Reply to this email with any question.`, ``, `Aidan`].join("\n");
-    return { subject: "Your printed King Lear in the Margins", text,
-      html: wrap(`<p>Thanks for ordering a printed <i>King Lear in the Margins</i>.</p><p>It is printed to order and ships to: ${where}.</p><p>I'll email you the tracking number when it leaves the printer, usually within a week.</p><p>Your receipt comes separately from Stripe. Reply to this email with any question.</p><p>Aidan</p>`) };
+    return { subject: `Your printed ${T}`, text,
+      html: wrap(`<p>Thanks for ordering a printed <i>${T}</i>.</p><p>It is printed to order and ships to: ${where}.</p><p>I'll email you the tracking number when it leaves the printer, usually within a week.</p><p>Your receipt comes separately from Stripe. Reply to this email with any question.</p><p>Aidan</p>`) };
   }
   const pw = fresh.metadata.password;
-  const link = `${SITE}/?pw=${encodeURIComponent(pw)}`;
-  const text = [`Thanks for buying the King Lear in the Margins course edition.`, ``, `Your password: ${pw}`, ``,
+  const link = `${here}/?pw=${encodeURIComponent(pw)}`;
+  const text = [`Thanks for buying the ${T} course edition.`, ``, `Your password: ${pw}`, ``,
     `Download the PDF: ${link}`, ``,
     `The classroom licence: give the file to the students of one course you teach, for as long as you teach it. Terms: ${SITE}/licence/`, ``,
     `Your receipt comes separately from Stripe. Reply to this email with any question.`, ``, `Aidan`].join("\n");
-  return { subject: "Your King Lear in the Margins course PDF", text,
-    html: wrap(`<p>Thanks for buying the <i>King Lear in the Margins</i> course edition.</p><p>Your password:<br><b style="font:600 22px ui-monospace,Menlo,monospace;letter-spacing:2px">${pw}</b></p><p>${btn(link, "Download the PDF")}</p><p>The classroom licence: give the file to the students of one course you teach, for as long as you teach it. <a href="${SITE}/licence/">Terms</a>.</p><p>Your receipt comes separately from Stripe. Reply to this email with any question.</p><p>Aidan</p>`) };
+  return { subject: `Your ${T} course PDF`, text,
+    html: wrap(`<p>Thanks for buying the <i>${T}</i> course edition.</p><p>Your password:<br><b style="font:600 22px ui-monospace,Menlo,monospace;letter-spacing:2px">${pw}</b></p><p>${btn(link, "Download the PDF")}</p><p>The classroom licence: give the file to the students of one course you teach, for as long as you teach it. <a href="${SITE}/licence/">Terms</a>.</p><p>Your receipt comes separately from Stripe. Reply to this email with any question.</p><p>Aidan</p>`) };
 }
 
 // Sent once per session: metadata.emailed is written before the send so a second caller backs off.
@@ -125,7 +137,7 @@ async function fulfilOnce(session, { who }) {
   const item = fresh.metadata.item;
   await mailgun({
     from: `Lear in the Margins <${FROM()}>`, to: process.env.NOTIFY_EMAIL || "aidan@brickandmortar.dev",
-    subject: `Sale: Lear ${item}, $${(fresh.amount_total || 0) / 100} from ${to}`,
+    subject: `Sale: ${PLAYS[playOf(fresh.metadata)].short} ${item}, $${(fresh.amount_total || 0) / 100} from ${to}`,
     text: item === "print"
       ? `${to} ordered a printed copy. Session ${fresh.id}.\nSubmit the print job: python scripts/order_print.py ${fresh.id}`
       : `${to} bought the course PDF. Session ${fresh.id}. Password ${fresh.metadata.password} emailed by the ${who}.\nReprint: python scripts/fulfil.py ${fresh.id}`,
@@ -133,4 +145,4 @@ async function fulfilOnce(session, { who }) {
   return { sent: true };
 }
 
-module.exports = { SITE, PRODUCT, OFFER, stripe, newPassword, checkPassword, nonceIsPaid, fulfilOnce, unlocked };
+module.exports = { SITE, PRODUCT, OFFER, PLAYS, play, playOf, itemName, itemDesc, stripe, newPassword, checkPassword, nonceIsPaid, fulfilOnce, unlocked };

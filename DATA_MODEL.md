@@ -64,5 +64,10 @@ in front of a class, legally, as a file each student gets or a copy on the desk.
 | print_job_id, print_cost | **Not until a Lulu account with Aidan's card exists.** Stripe takes the buyer's money and the shipping address now; the job is submitted by `scripts/order_print.py`. |
 | Recipient own_record_line | Per row; a row without one is held, never sent the generic pitch. |
 
+**Hamlet (2026-10-16), the same model, checked again.** Milton: 24 marks found by eye in the
+same Folio. Keats: 19 underlinings read by eye in Houghton's digitization of his own copy,
+five also in Spurgeon 1928. Melville: the same permission gap. All 43 anchors 0.91-1.00 on
+Moby, each checked on the rendered page. Print cost moves to $14.42 (README "## Price").
+
 Nothing was dropped to fit the data: Melville is the one gap, and it is a permission, not a
 missing source.

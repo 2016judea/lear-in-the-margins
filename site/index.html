@@ -22,6 +22,9 @@ a{color:var(--ox)}
 header{padding:18px 0 4px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 header .brand{font:600 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 header a{font:500 13px var(--sans);color:var(--mute)}
+.plays{display:flex;gap:6px;margin:14px 0 0}
+.plays a{flex:0 0 auto;display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:22px;font:600 15px var(--sans);color:var(--ink);text-decoration:none;background:var(--paper)}
+.plays a[aria-current="page"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .for{margin:14px 0 0;padding:10px 14px;border-left:3px solid var(--ox);background:var(--paper);font-size:15.5px}
 .for[hidden]{display:none}
 h1{font-weight:400;font-size:31px;line-height:1.12;margin:16px 0 8px;letter-spacing:-.01em}
@@ -72,13 +75,14 @@ footer{margin:36px 0 40px;font:13px/1.6 var(--sans);color:var(--mute)}
 </head>
 <body>
 <div class="wrap">
-<header><span class="brand">King Lear in the Margins</span><a href="/licence/">Classroom licence</a></header>
+<header><span class="brand" id="brand">King Lear in the Margins</span><a href="/licence/">Classroom licence</a></header>
+<nav class="plays" aria-label="Choose the play"><a href="/" data-play="lear" aria-current="page">King Lear</a><a href="/hamlet/" data-play="hamlet">Hamlet</a></nav>
 <p class="for" id="for" hidden></p>
-<h1><i>King Lear</i>, with Milton and Keats in the margins.</h1>
+<h1 id="h1"><i>King Lear</i>, with Milton and Keats in the margins.</h1>
 <p class="lede">Each reader's own marks, set beside the line that provoked them. A course edition for teaching the play.</p>
 <figure style="margin:0">
- <div class="spread" id="spread"><img src="/img/hero-62-63.webp" width="2550" height="700" alt="Pages 62 and 63 of the edition. Edgar's line 'Fathom and half, fathom and half! Poor Tom!' is highlighted, and beside it Keats's note: he circled the words 'Poor Tom' and dated them Sunday evening, Oct. 4, 1818, while nursing his dying brother Tom."></div>
- <figcaption class="cap"><span class="swipe">Swipe the page &rarr; </span>pp. 62&ndash;63, as printed. <b>JK</b>: Keats dated the words &ldquo;Poor Tom&rdquo; on 4 October 1818, while nursing his brother Tom.</figcaption>
+ <div class="spread" id="spread"><img id="hero" src="/img/hero-62-63.webp" width="2550" height="700" alt="Pages 62 and 63 of the edition. Edgar's line 'Fathom and half, fathom and half! Poor Tom!' is highlighted, and beside it Keats's note: he circled the words 'Poor Tom' and dated them Sunday evening, Oct. 4, 1818, while nursing his dying brother Tom."></div>
+ <figcaption class="cap"><span class="swipe">Swipe the page &rarr; </span><span id="cap">pp. 62&ndash;63, as printed. <b>JK</b>: Keats dated the words &ldquo;Poor Tom&rdquo; on 4 October 1818, while nursing his brother Tom.</span></figcaption>
 </figure>
 
 <section class="paid" id="paid" hidden aria-live="polite"><h2 id="paidH">Confirming your payment&hellip;</h2><p id="paidP"></p></section>
@@ -97,13 +101,36 @@ footer{margin:36px 0 40px;font:13px/1.6 var(--sans);color:var(--mute)}
 </div>
 <div id="checkout" hidden></div>
 
-<p class="sample"><a href="/sample.pdf" id="sample">Read the first 14 pages</a>: Keats's sonnet, then Act 1 to Milton's first mark.</p>
+<p class="sample" id="samplep"><a href="/sample.pdf" id="sample">Read the first 14 pages</a>: Keats's sonnet, then Act 1 to Milton's first mark.</p>
 
-<ul class="inside">
+<ul class="inside" id="inside">
  <li><span class="k" style="color:var(--jm)">JM</span>John Milton's five marks from his own First Folio, found by eye in the Free Library of Philadelphia's facsimile.</li>
  <li><span class="k" style="color:var(--jk)">JK</span>John Keats's sonnet <i>On Sitting Down to Read King Lear Once Again</i>, facing Act 1, and the one date he wrote in the margin.</li>
  <li>The play on the Moby text, in the public domain. Every mark cites where to check it.</li>
 </ul>
+<script>
+// Which play: /hamlet/ opens Hamlet, everything else opens Lear. Runs during parse, so the
+// page paints on the chosen play's own spread. Lear's copy above is the no-JS default.
+window.PLAY=(location.pathname.match(/^\/hamlet\/?$/)?"hamlet":"lear");
+window.PLAYS={
+ lear:{short:"King Lear",glide:1150},
+ hamlet:{short:"Hamlet",glide:2400,
+  h1:"<i>Hamlet</i>, with Milton and Keats in the margins.",
+  hero:"/img/hamlet/hero.webp",
+  alt:"Pages 14 and 15 of the edition. Horatio's line 'By their oppress'd and fear-surprised eyes' is marked by both readers: beside it, Milton's note that his Folio printed 'Be their opprest' and he wrote 'by' in the margin, and Keats's note that he underlined the line in his own copy.",
+  cap:"pp. 14&ndash;15, as printed. <b style=\"color:var(--jm)\">JM</b>: where his Folio printed &ldquo;Be their opprest,&rdquo; Milton wrote &ldquo;by&rdquo; in the margin. <b>JK</b>: Keats underlined the same line.",
+  sample:"/hamlet/sample.pdf",
+  samplep:"<a href=\"/hamlet/sample.pdf\" id=\"sample\">Read the first 15 pages</a>: the bird of dawning, the first soliloquy, and Milton correcting the Ghost scene.",
+  inside:"<li><span class=\"k\" style=\"color:var(--jm)\">JM</span>John Milton's 24 marks from his own First Folio, 15 of them words he wrote in the margin to correct the printer, found by eye in the Free Library of Philadelphia's facsimile.</li><li><span class=\"k\" style=\"color:var(--jk)\">JK</span>John Keats's 19 underlinings from his own pocket Shakespeare, read from Harvard's digitization of it.</li><li>The play on the Moby text, in the public domain. Every mark cites where to check it.</li>"}
+};
+(()=>{const P=PLAYS[PLAY],$=s=>document.getElementById(s);
+document.querySelectorAll(".plays a").forEach(a=>a.dataset.play===PLAY?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
+if(PLAY==="lear")return;
+document.title=$("brand").textContent=P.short+" in the Margins";
+$("h1").innerHTML=P.h1;const im=$("hero");im.src=P.hero;im.alt=P.alt;$("cap").innerHTML=P.cap;
+$("samplep").innerHTML=P.samplep;$("inside").innerHTML=P.inside;
+document.querySelector('a[href="/licence/"]').href="/licence/?play="+PLAY;})();
+</script>
 
 <form class="pwf" id="pwf"><input name="pw" placeholder="Have a password?" autocomplete="off" aria-label="Password from your email"><button class="btn alt" type="submit">Download</button><p class="pwerr" id="pwerr"></p></form>
 
@@ -117,24 +144,25 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 const TOKEN=(location.pathname.match(/^\/for\/([a-z0-9]{6,16})\/?$/)||[])[1]||null;
 const track=(name,props={})=>{const p=Object.assign(TOKEN?{token:TOKEN}:{},props);try{window.va("event",{name,...p})}catch(e){}try{window.posthog&&posthog.capture(name,p)}catch(e){}};
 fetch("/offer.json").then(r=>r.json()).then(o=>document.querySelectorAll(".pp").forEach(el=>el.textContent="$"+o[el.dataset.p].price_usd));
-fetch("/edition.json").then(r=>r.json()).then(e=>$("#pages").textContent=e.pages);
+fetch("/edition.json").then(r=>r.json()).then(e=>$("#pages").textContent=(e[PLAY]||e).pages);
 if(TOKEN){fetch("/r/"+TOKEN+".json").then(r=>r.ok?r.json():null).then(r=>{if(!r)return;const f=$("#for");f.innerHTML=esc(r.line);f.hidden=false;try{posthog&&posthog.register({token:TOKEN})}catch(e){}}).catch(()=>{})}
-$("#sample").addEventListener("click",()=>track("preview_open",{what:"sample_pdf"}));
+$("#sample").addEventListener("click",()=>track("preview_open",{what:"sample_pdf",play:PLAY}));
+document.querySelectorAll(".plays a").forEach(a=>a.addEventListener("click",()=>track("play_pick",{play:a.dataset.play,from:PLAY})));
 // On a phone the spread is wider than the screen: open on Edgar's line, then glide to Keats's note so the swipe explains itself.
 const sp=$("#spread");let seen=false,auto=false;
-sp.addEventListener("scroll",()=>{if(!seen&&!auto){seen=true;track("preview_open",{what:"spread_swipe"})}},{passive:true});
-if(sp.scrollWidth>sp.clientWidth+40){const img=sp.querySelector("img");const go=()=>{const k=img.clientWidth/2550;const want=Math.max(0,1150*k-sp.clientWidth+16);auto=true;sp.scrollTo({left:want,behavior:"smooth"});setTimeout(()=>auto=false,1500)};setTimeout(()=>img.complete?go():img.addEventListener("load",go),900)}
+sp.addEventListener("scroll",()=>{if(!seen&&!auto){seen=true;track("preview_open",{what:"spread_swipe",play:PLAY})}},{passive:true});
+if(sp.scrollWidth>sp.clientWidth+40){const img=sp.querySelector("img");const go=()=>{const k=img.clientWidth/2550;const want=Math.max(0,PLAYS[PLAY].glide*k-sp.clientWidth+16);auto=true;sp.scrollTo({left:want,behavior:"smooth"});setTimeout(()=>auto=false,1500)};setTimeout(()=>img.complete?go():img.addEventListener("load",go),900)}
 let CO=null,COitem=null;
 const loadStripe=()=>window.Stripe?Promise.resolve():new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="https://js.stripe.com/dahlia/stripe.js";sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)});
 document.querySelectorAll("[data-item]").forEach(b=>b.addEventListener("click",async()=>{
- const item=b.dataset.item;track("checkout_open",{item});
+ const item=b.dataset.item;track("checkout_open",{item,play:PLAY});
  const box=$("#checkout");box.hidden=false;
  if(CO&&COitem===item){box.scrollIntoView({behavior:"smooth",block:"start"});return}
  if(CO){CO.destroy();CO=null}
  const t=b.innerHTML;b.disabled=true;b.textContent="Loading secure checkout…";
  try{
   await loadStripe();const st=Stripe(PK);
-  const opts={fetchClientSecret:()=>fetch("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({item,token:TOKEN})}).then(r=>r.json()).then(j=>{if(!j.clientSecret)throw new Error(j.error||"Checkout could not start.");return j.clientSecret})};
+  const opts={fetchClientSecret:()=>fetch("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({item,play:PLAY,token:TOKEN})}).then(r=>r.json()).then(j=>{if(!j.clientSecret)throw new Error(j.error||"Checkout could not start.");return j.clientSecret})};
   CO=await (st.createEmbeddedCheckoutPage?st.createEmbeddedCheckoutPage(opts):st.initEmbeddedCheckout(opts));COitem=item;
   CO.mount("#checkout");setTimeout(()=>box.scrollIntoView({behavior:"smooth",block:"start"}),300);
  }catch(x){CO=null;$("#pwerr").textContent="Checkout didn't load. Refresh and try again, or email aidan@brickandmortar.dev.";}
@@ -145,14 +173,14 @@ async function download(pw,how){
  const r=await fetch("/api/download?check=1&pw="+encodeURIComponent(pw));
  const j=await r.json().catch(()=>({}));
  if(!r.ok){err.textContent=j.error||"That didn't work. Try again in a minute.";return}
- track("download",{how});location.href="/api/download?pw="+encodeURIComponent(pw);
+ track("download",{how,play:j.play});location.href="/api/download?pw="+encodeURIComponent(pw);
 }
 $("#pwf").addEventListener("submit",e=>{e.preventDefault();const v=e.target.pw.value.trim();if(v)download(v,"form")});
 async function confirmPaid(id){
  const P=$("#paid"),H=$("#paidH"),T=$("#paidP");P.hidden=false;$("#buy").hidden=true;
  for(let i=0;i<6;i++){
   try{const j=await fetch("/api/session-status?session_id="+encodeURIComponent(id)).then(r=>r.json());
-   if(j.paid){track("paid",{item:j.item});
+   if(j.paid){track("paid",{item:j.item,play:j.play});
     if(j.item==="print"){H.textContent="Thank you. Your copy goes to the printer.";T.innerHTML=`A confirmation is on its way${j.email?` to <b>${esc(j.email)}</b>`:""}, and the tracking number follows when it ships.`}
     else{H.textContent="Check your email for your password";T.innerHTML=`${j.email?`Sent to <b>${esc(j.email)}</b>. `:""}It downloads the PDF here, on any device. The Stripe invoice carries it too.`}
     return}

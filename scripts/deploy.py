@@ -30,8 +30,10 @@ def upload(p, rel):
 assert PDF.exists(), "run scripts/build_edition.sh first: private/king_lear_course.pdf is what the paywall serves"
 paths = [(p, str(p.relative_to(SITE))) for p in sorted(SITE.rglob("*"))
          if p.is_file() and not p.name.startswith(".") and "_full" not in p.parts]
-paths.append((PDF, "api/_full/king_lear_course.pdf"))
-paths.append((ROOT / "private" / "cover.pdf", "api/_full/cover.pdf"))
+for src, dst in (("king_lear_course.pdf", "king_lear_course.pdf"), ("cover.pdf", "cover.pdf"),
+                 ("hamlet_course.pdf", "hamlet_course.pdf"), ("cover_hamlet.pdf", "cover_hamlet.pdf")):
+    assert (ROOT / "private" / src).exists(), f"private/{src} missing: run scripts/build_edition.sh <play>"
+    paths.append((ROOT / "private" / src, f"api/_full/{dst}"))
 files = [upload(p, rel) for p, rel in paths]
 print(f"uploaded {len(files)} files")
 d = requests.post(f"{API}/v13/deployments?teamId={TEAM}&forceNew=1", headers=H, json={

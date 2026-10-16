@@ -1,10 +1,16 @@
-// GET /api/print-file?f=interior|cover&exp=<unix>&sig=<hmac> -> a print file, for the
+// GET /api/print-file?f=interior|cover[-<play>]&exp=<unix>&sig=<hmac> -> a print file, for the
 // print-on-demand service to fetch when scripts/order_print.py submits a job. The link is
 // signed with ACCESS_SECRET and expires, so the paid PDF is never at a public URL.
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const FILES = { interior: "king_lear_course.pdf", cover: "cover.pdf" };
+const { PLAYS } = require("./_lib");
+const FILES = {};
+for (const [p, P] of Object.entries(PLAYS)) {
+  const sfx = p === "lear" ? "" : `-${p}`;
+  FILES[`interior${sfx}`] = P.file;
+  FILES[`cover${sfx}`] = P.cover;
+}
 
 module.exports = (req, res) => {
   const f = String(req.query.f || ""), exp = Number(req.query.exp || 0), sig = String(req.query.sig || "");

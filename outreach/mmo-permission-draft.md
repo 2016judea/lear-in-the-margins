@@ -7,8 +7,8 @@ know him, which beats a cold note to the same inbox. Their policy page (/pages/p
 covers page images and citation; it declares no licence for the XML transcriptions,
 which is why this asks.
 
-Status: DRAFT 2026-10-16. Not sent. When they say yes, add `--xml` back to
-`scripts/build_edition.sh` (the pipeline already renders all three readers) and
+Status: DRAFT 2026-10-16 (Hamlet line added the same day). Not sent. When they say yes, add `--xml` back to
+`scripts/build_edition.sh` (per play: Hamlet is the same volume, pp. 247-394) (the pipeline already renders all three readers) and
 rebuild.
 
 ---
@@ -23,6 +23,8 @@ Since August the Lear edition grew. Milton's marks from his First Folio and Keat
 So I want to offer it to people who teach Lear, as a course edition: a PDF a professor can give to one course's students, or a printed copy. To make that legal I've moved it off the Folger text, which is non-commercial, onto a public-domain one. Which leaves Melville. Your transcriptions carry no stated licence, so I'm asking before I do anything.
 
 Would MMO allow the transcribed marks for King Lear (Vol. 7, DocId 31) in an edition that's sold? What I'd use is the text and position of each mark, never a page image, with the full citation you ask for on the title page and with every mark. If you'd want a share of each sale to go to the project, or a different credit, or a no, all of those are fine answers.
+
+The same question for his Hamlet, in the same volume. He marked it as heavily, and a Hamlet edition with Milton and Keats is live now too.
 
 Until I hear from you the paid edition ships with Milton and Keats only. The free edition with all three stays free.
 

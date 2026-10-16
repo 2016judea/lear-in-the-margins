@@ -9,6 +9,14 @@
   },
   "rewrites": [
     {
+      "source": "/hamlet",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hamlet/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/for/:token",
       "destination": "/index.html"
     },

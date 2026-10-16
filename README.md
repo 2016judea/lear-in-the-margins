@@ -2,8 +2,8 @@
 
 **Live:** https://lear-in-the-margins.vercel.app
 
-*King Lear* with John Milton's and John Keats's own marks set beside the lines that
-provoked them, sold as a course edition to people who teach the play: a PDF with a
+*King Lear* and *Hamlet* with John Milton's and John Keats's own marks set beside the
+lines that provoked them, sold as a course edition to people who teach the play: a PDF with a
 classroom licence, or a printed copy made to order.
 
 The edition is built by the open-source pipeline
@@ -19,18 +19,35 @@ is the shop around it.
 | Keats (sonnet + 1 mark) | the 1818 sonnet; Spurgeon, *Keats's Shakespeare* (1928), US public domain since 2024 | sellable |
 | Melville (52 marks) | Melville's Marginalia Online XML, no declared licence | **not in the paid edition** until MMO says yes; ask drafted at `outreach/mmo-permission-draft.md` |
 
+**Hamlet** (`/hamlet/`, 133 pp), same rules:
+
+| | source | status |
+|---|---|---|
+| Play text | MIT Moby Shakespeare, public domain | sellable |
+| Milton (24 marks, 15 of them words he wrote) | located by eye in the same Free Library Folio, pp. 152-156 and 257-282; mostly corrections of the Folio's misprints ("morn" for "day", "Pelican" for "Politician") | sellable |
+| Keats (19 underlinings) | read by eye from Houghton's IIIF digitization of his own 1814-18 *Dramatic Works* vol. 7 (pages Houghton labels "[contains marginalia]"); five of them also named in Spurgeon 1928 pp. 27-28 | sellable; no image reproduced |
+| Melville | MMO, same volume | not in the paid edition; the MMO draft now asks for Hamlet too |
+| anyone else | `~/Desktop/marginalia-corpus` holds no other clean Hamlet reader: Melville (no licence) and Beckett (in copyright until ~2059) are its only Shakespeare markers | none |
+
+Marks live in the pipeline repo, `examples/<play>/annotators.json`, anchored by text; every
+Hamlet anchor scored 1.00 except one at 0.91, and every marked page was checked rendered.
+
 The free three-reader edition on the Folger text (CC BY-NC) stays free and
 non-commercial at https://aidanjude.vercel.app/king-lear-annotated.
 
 ## Build and deploy
 
 ```bash
-./scripts/build_edition.sh          # private/king_lear_course.pdf (116 pp) + site/sample.pdf + site/img/
+./scripts/build_edition.sh lear     # private/king_lear_course.pdf (116 pp) + site/sample.pdf + site/img/
+./scripts/build_edition.sh hamlet   # private/hamlet_course.pdf (133 pp) + site/hamlet/sample.pdf + site/img/hamlet/
 python3 scripts/build_for_pages.py  # site/r/<token>.json from the gitignored outreach ledger
 VERCEL_TOKEN=... python3 scripts/deploy.py
 ```
 
 `build_edition.sh` fails if any hand-located anchor scores under 0.75 on the Moby text.
+Per-play paths and the spreads the page opens on are in `plays.json`. The shop page picks the
+play from the path (`/` Lear, `/hamlet/` Hamlet); a password is signed per play, so it opens
+only the file it was sold for. Comp: `fulfil.py --comp "label" --play hamlet`.
 
 ## The paywall
 
@@ -65,6 +82,12 @@ about $15 ($375). A tenth of ~$350 is ~$35; rounded to $40.
 **Printed copy, $40.** Cost-plus. Lulu's spec sheet (2026): $6.95 + 116 pp x $0.0562 =
 $13.47 to print; shipping $6-10 and a $1.75 fulfilment fee (reported 2025); Stripe
 2.9% + $0.30 = $1.46. Worst case $26.68, leaving about $13 a copy.
+
+**Hamlet, 2026-10-16: same prices, new arithmetic.** It runs 133 pages, so the print cost
+moves: $6.95 + 133 x $0.0562 = $14.42 to print; worst case $14.42 + $10 + $1.75 + $1.46 =
+$27.63, leaving about $12.37 a copy. Still inside the band, so the printed copy stays $40.
+The PDF's comparator moves up too (133 pp x 25 students x $0.12 = $399 a course pack), and a
+tenth of it is still $40.
 
 ## Outreach (drafts only)
 
