@@ -1,0 +1,7 @@
+private/
+site/api/_full/
+site/r/
+outreach/round1/
+__pycache__/
+.DS_Store
+.vercel/

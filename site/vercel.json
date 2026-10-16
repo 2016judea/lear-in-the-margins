@@ -1,0 +1,38 @@
+{
+  "functions": {
+    "api/download.js": {
+      "includeFiles": "api/_full/**"
+    },
+    "api/print-file.js": {
+      "includeFiles": "api/_full/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/for/:token",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/for/:token/",
+      "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/api/_full/:path*",
+      "destination": "/",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(edition|offer).json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
+}

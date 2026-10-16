@@ -1,0 +1,12 @@
+{
+  "pdf": {
+    "name": "King Lear in the Margins: course PDF",
+    "description": "The 116-page course edition as a PDF, with a classroom licence: give it to the students of one course you teach.",
+    "price_usd": 40
+  },
+  "print": {
+    "name": "King Lear in the Margins: printed copy",
+    "description": "One coil-bound copy, US Letter, colour, printed on demand and shipped to you (US addresses).",
+    "price_usd": 40
+  }
+}

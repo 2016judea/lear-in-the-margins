@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>King Lear in the Margins</title>
+<meta name="description" content="King Lear with John Milton's and John Keats's own marks set beside the lines that provoked them. A course edition: a PDF with a classroom licence, or a printed copy.">
+<meta property="og:title" content="King Lear in the Margins">
+<meta property="og:description" content="Milton and Keats, marking up Lear. A course edition for teaching the play.">
+<meta property="og:image" content="https://lear-in-the-margins.vercel.app/img/hero-62-63.webp">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23f6f1e7'/><rect x='21' y='6' width='2.5' height='20' fill='%237a1010'/><rect x='7' y='9' width='11' height='2' fill='%23333'/><rect x='7' y='15' width='11' height='2' fill='%23333'/><rect x='7' y='21' width='9' height='2' fill='%23333'/></svg>">
+<style>
+:root{--bg:#f6f1e7;--paper:#fffdf8;--ink:#1d1a16;--mute:#6b6257;--line:#ddd3c2;--ox:#7a1010;--jk:#6b5a23;--jm:#2e4057;
+ --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17140f;--paper:#211d17;--ink:#efe8db;--mute:#a89d8c;--line:#3a3329;--ox:#d0605a;--jk:#c8b26a;--jm:#9db4d6}}
+:root[data-theme="dark"]{--bg:#17140f;--paper:#211d17;--ink:#efe8db;--mute:#a89d8c;--line:#3a3329;--ox:#d0605a;--jk:#c8b26a;--jm:#9db4d6}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--serif)}
+a{color:var(--ox)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+header{padding:18px 0 4px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+header .brand{font:600 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+header a{font:500 13px var(--sans);color:var(--mute)}
+.for{margin:14px 0 0;padding:10px 14px;border-left:3px solid var(--ox);background:var(--paper);font-size:15.5px}
+.for[hidden]{display:none}
+h1{font-weight:400;font-size:31px;line-height:1.12;margin:16px 0 8px;letter-spacing:-.01em}
+h1 i{color:var(--ox)}
+.lede{margin:0 0 16px;color:var(--mute);font-size:17px;max-width:40em}
+.spread{margin:0 -16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:none;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.spread img{display:block;height:340px;width:auto;max-width:none}
+.cap{font:13px/1.45 var(--sans);color:var(--mute);margin:8px 0 0}
+.cap b{color:var(--jk)}
+.swipe{font:600 12px var(--sans);color:var(--ox);letter-spacing:.04em}
+.buy{display:grid;gap:12px;margin:26px 0 10px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px 16px}
+.card h2{margin:0;font-weight:600;font-size:20px}
+.card p{margin:6px 0 14px;color:var(--mute);font-size:15px}
+.price{font:600 15px var(--sans);color:var(--ink)}
+.btn{display:inline-block;text-align:center;line-height:48px;min-height:48px;padding:0 20px;border-radius:8px;border:0;background:var(--ox);color:#fff;font:600 16px var(--sans);cursor:pointer;width:100%;text-decoration:none}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn:disabled{opacity:.6}
+#checkout{margin:12px 0}
+#checkout[hidden]{display:none}
+.sample{margin:20px 0;font:15px var(--sans)}
+.inside{margin:28px 0 8px;padding:0;list-style:none;border-top:1px solid var(--line)}
+.inside li{padding:12px 0;border-bottom:1px solid var(--line);font-size:16px}
+.inside .k{font:700 12px var(--sans);letter-spacing:.06em;margin-right:6px}
+.pwf{margin:22px 0;display:flex;gap:8px;flex-wrap:wrap}
+.pwf[hidden]{display:none}
+.pwf input{flex:1 1 200px;min-height:48px;font:16px ui-monospace,Menlo,monospace;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);letter-spacing:.08em}
+.pwf button{flex:0 0 auto;width:auto}
+.pwerr{flex-basis:100%;font:14px var(--sans);color:var(--ox);min-height:1em;margin:0}
+.paid{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px 16px;margin:18px 0}
+.paid[hidden]{display:none}
+.paid h2{margin:0;font-weight:600;font-size:21px}
+.paid p{margin:8px 0 0;color:var(--mute);font-size:15px}
+footer{margin:36px 0 40px;font:13px/1.6 var(--sans);color:var(--mute)}
+@media (min-width:760px){
+ h1{font-size:46px;margin-top:22px;max-width:16em}
+ .lede{font-size:19px}
+ .spread{margin:0;border:1px solid var(--line);border-radius:4px}
+ .spread img{height:auto;width:100%}
+ .buy{grid-template-columns:1fr 1fr;gap:18px}
+ .card{padding:24px 24px}
+ .btn{width:auto}
+ .swipe{display:none}
+}
+</style>
+<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<div class="wrap">
+<header><span class="brand">King Lear in the Margins</span><a href="/licence/">Classroom licence</a></header>
+<p class="for" id="for" hidden></p>
+<h1><i>King Lear</i>, with Milton and Keats in the margins.</h1>
+<p class="lede">Each reader's own marks, set beside the line that provoked them. A course edition for teaching the play.</p>
+<figure style="margin:0">
+ <div class="spread" id="spread"><img src="/img/hero-62-63.webp" width="2550" height="700" alt="Pages 62 and 63 of the edition. Edgar's line 'Fathom and half, fathom and half! Poor Tom!' is highlighted, and beside it Keats's note: he circled the words 'Poor Tom' and dated them Sunday evening, Oct. 4, 1818, while nursing his dying brother Tom."></div>
+ <figcaption class="cap"><span class="swipe">Swipe the page &rarr; </span>pp. 62&ndash;63, as printed. <b>JK</b>: Keats dated the words &ldquo;Poor Tom&rdquo; on 4 October 1818, while nursing his brother Tom.</figcaption>
+</figure>
+
+<section class="paid" id="paid" hidden aria-live="polite"><h2 id="paidH">Confirming your payment&hellip;</h2><p id="paidP"></p></section>
+
+<div class="buy" id="buy">
+ <div class="card">
+  <h2>Course PDF</h2>
+  <p><span id="pages">116</span> pages, with a classroom licence: give it to the students of one course you teach.</p>
+  <button class="btn" data-item="pdf" id="b-pdf">Buy the PDF &middot; <span class="pp" data-p="pdf">$40</span></button>
+ </div>
+ <div class="card">
+  <h2>Printed copy</h2>
+  <p>Coil-bound so it lies flat, US Letter, in colour. Printed to order and shipped to you.</p>
+  <button class="btn alt" data-item="print" id="b-print">Order a copy &middot; <span class="pp" data-p="print">$40</span></button>
+ </div>
+</div>
+<div id="checkout" hidden></div>
+
+<p class="sample"><a href="/sample.pdf" id="sample">Read the first 14 pages</a>: Keats's sonnet, then Act 1 to Milton's first mark.</p>
+
+<ul class="inside">
+ <li><span class="k" style="color:var(--jm)">JM</span>John Milton's five marks from his own First Folio, found by eye in the Free Library of Philadelphia's facsimile.</li>
+ <li><span class="k" style="color:var(--jk)">JK</span>John Keats's sonnet <i>On Sitting Down to Read King Lear Once Again</i>, facing Act 1, and the one date he wrote in the margin.</li>
+ <li>The play on the Moby text, in the public domain. Every mark cites where to check it.</li>
+</ul>
+
+<form class="pwf" id="pwf"><input name="pw" placeholder="Have a password?" autocomplete="off" aria-label="Password from your email"><button class="btn alt" type="submit">Download</button><p class="pwerr" id="pwerr"></p></form>
+
+<footer>Made by Aidan Jude &middot; <a href="mailto:aidan@brickandmortar.dev">aidan@brickandmortar.dev</a><br>Built with <a href="https://github.com/2016judea/shakespeare-marginalia">shakespeare-marginalia</a>, open source.</footer>
+</div>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const PK="pk_live_51TUvvcBzD4mN8eOD28H6oQkFwFHwF1SLtWxN1vHRmnSxntWFefgd33mEIVmjv8ekxWgkZft3OpPlzmVXMIeHPBwj003998hjTf";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const TOKEN=(location.pathname.match(/^\/for\/([a-z0-9]{6,16})\/?$/)||[])[1]||null;
+const track=(name,props={})=>{const p=Object.assign(TOKEN?{token:TOKEN}:{},props);try{window.va("event",{name,...p})}catch(e){}try{window.posthog&&posthog.capture(name,p)}catch(e){}};
+fetch("/offer.json").then(r=>r.json()).then(o=>document.querySelectorAll(".pp").forEach(el=>el.textContent="$"+o[el.dataset.p].price_usd));
+fetch("/edition.json").then(r=>r.json()).then(e=>$("#pages").textContent=e.pages);
+if(TOKEN){fetch("/r/"+TOKEN+".json").then(r=>r.ok?r.json():null).then(r=>{if(!r)return;const f=$("#for");f.innerHTML=esc(r.line);f.hidden=false;try{posthog&&posthog.register({token:TOKEN})}catch(e){}}).catch(()=>{})}
+$("#sample").addEventListener("click",()=>track("preview_open",{what:"sample_pdf"}));
+// On a phone the spread is wider than the screen: open on Edgar's line, then glide to Keats's note so the swipe explains itself.
+const sp=$("#spread");let seen=false,auto=false;
+sp.addEventListener("scroll",()=>{if(!seen&&!auto){seen=true;track("preview_open",{what:"spread_swipe"})}},{passive:true});
+if(sp.scrollWidth>sp.clientWidth+40){const img=sp.querySelector("img");const go=()=>{const k=img.clientWidth/2550;const want=Math.max(0,1150*k-sp.clientWidth+16);auto=true;sp.scrollTo({left:want,behavior:"smooth"});setTimeout(()=>auto=false,1500)};setTimeout(()=>img.complete?go():img.addEventListener("load",go),900)}
+let CO=null,COitem=null;
+const loadStripe=()=>window.Stripe?Promise.resolve():new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="https://js.stripe.com/dahlia/stripe.js";sc.onload=ok;sc.onerror=no;document.head.appendChild(sc)});
+document.querySelectorAll("[data-item]").forEach(b=>b.addEventListener("click",async()=>{
+ const item=b.dataset.item;track("checkout_open",{item});
+ const box=$("#checkout");box.hidden=false;
+ if(CO&&COitem===item){box.scrollIntoView({behavior:"smooth",block:"start"});return}
+ if(CO){CO.destroy();CO=null}
+ const t=b.innerHTML;b.disabled=true;b.textContent="Loading secure checkout…";
+ try{
+  await loadStripe();const st=Stripe(PK);
+  const opts={fetchClientSecret:()=>fetch("/api/checkout",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({item,token:TOKEN})}).then(r=>r.json()).then(j=>{if(!j.clientSecret)throw new Error(j.error||"Checkout could not start.");return j.clientSecret})};
+  CO=await (st.createEmbeddedCheckoutPage?st.createEmbeddedCheckoutPage(opts):st.initEmbeddedCheckout(opts));COitem=item;
+  CO.mount("#checkout");setTimeout(()=>box.scrollIntoView({behavior:"smooth",block:"start"}),300);
+ }catch(x){CO=null;$("#pwerr").textContent="Checkout didn't load. Refresh and try again, or email aidan@brickandmortar.dev.";}
+ finally{b.disabled=false;b.innerHTML=t}
+}));
+async function download(pw,how){
+ const err=$("#pwerr");err.textContent="";
+ const r=await fetch("/api/download?check=1&pw="+encodeURIComponent(pw));
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok){err.textContent=j.error||"That didn't work. Try again in a minute.";return}
+ track("download",{how});location.href="/api/download?pw="+encodeURIComponent(pw);
+}
+$("#pwf").addEventListener("submit",e=>{e.preventDefault();const v=e.target.pw.value.trim();if(v)download(v,"form")});
+async function confirmPaid(id){
+ const P=$("#paid"),H=$("#paidH"),T=$("#paidP");P.hidden=false;$("#buy").hidden=true;
+ for(let i=0;i<6;i++){
+  try{const j=await fetch("/api/session-status?session_id="+encodeURIComponent(id)).then(r=>r.json());
+   if(j.paid){track("paid",{item:j.item});
+    if(j.item==="print"){H.textContent="Thank you. Your copy goes to the printer.";T.innerHTML=`A confirmation is on its way${j.email?` to <b>${esc(j.email)}</b>`:""}, and the tracking number follows when it ships.`}
+    else{H.textContent="Check your email for your password";T.innerHTML=`${j.email?`Sent to <b>${esc(j.email)}</b>. `:""}It downloads the PDF here, on any device. The Stripe invoice carries it too.`}
+    return}
+   if(j.error)break}catch(e){}
+  await new Promise(r=>setTimeout(r,2500))}
+ H.textContent="We couldn't confirm that payment yet";
+ T.innerHTML='If you were charged, the email is on its way. Otherwise try again, or write to aidan@brickandmortar.dev.';
+}
+const qs=new URLSearchParams(location.search),pwq=qs.get("pw"),paidq=qs.get("paid");
+if(pwq||paidq){qs.delete("pw");qs.delete("paid");history.replaceState(null,"",location.pathname+(qs.toString()?"?"+qs:""))}
+if(paidq)confirmPaid(paidq);
+if(pwq){$("#pwf").pw.value=pwq;download(pwq,"link")}
+})();
+</script>
+<!-- bm-posthog:begin v2 — shared across every Vercel prototype; source ~/.claude/skills/site-analytics/posthog_snippet.html. ?me=1 opts this browser out on this site (?me=0 undoes); ?me=1&next=host1,host2 walks the opt-out across sites; headless (navigator.webdriver) never loads it. -->
+<script>
+(function(w,d){var S="lear-in-the-margins",K="bm_me",me=false,u,p,n;
+try{u=new URLSearchParams(location.search);p=u.get("me");n=u.get("next");}catch(e){}
+try{if(p==="1"){localStorage.setItem(K,"1");}else if(p==="0"){localStorage.removeItem(K);}}catch(e){}
+if(p==="1"){d.cookie=K+"=1; path=/; max-age=63072000; SameSite=Lax";}else if(p==="0"){d.cookie=K+"=; path=/; max-age=0; SameSite=Lax";}
+try{me=localStorage.getItem(K)==="1";}catch(e){}
+if(!me&&/(?:^|; )bm_me=1/.test(d.cookie))me=true;
+if(p==="1"&&n){var h=n.split(","),f=h.shift();if(/^[a-z0-9.-]+$/.test(f)&&(f.slice(-11)===".vercel.app"||f==="brickandmortar.dev"||f==="readglean.com")){location.replace("https://"+f+"/?me=1"+(h.length?"&next="+h.join(","):""));}}
+if(navigator.webdriver===true)return;
+!function(t,e){var o,n,p,r;e.__SV||(w.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once unregister identify setPersonProperties reset get_distinct_id get_session_id alias set_config startSessionRecording stopSessionRecording opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing captureException getFeatureFlag isFeatureEnabled onFeatureFlags".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(d,w.posthog||[]);
+posthog.init("phc_yFgRGppL6H7DvhgZTQKbHdrY5oqnpLT482rrNYtLqnAx",{api_host:"https://us.i.posthog.com",person_profiles:"identified_only",persistence:"localStorage+cookie",opt_out_capturing_by_default:me});
+if(me){posthog.opt_out_capturing();}else{if(p==="0")posthog.opt_in_capturing();posthog.register({site:S});}
+})(window,document);
+</script>
+<!-- bm-posthog:end -->
+
+</body>
+</html>
