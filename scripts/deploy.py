@@ -28,8 +28,20 @@ def upload(p, rel):
 
 
 assert PDF.exists(), "run scripts/build_edition.sh first: private/king_lear_course.pdf is what the paywall serves"
-paths = [(p, str(p.relative_to(SITE))) for p in sorted(SITE.rglob("*"))
-         if p.is_file() and not p.name.startswith(".") and "_full" not in p.parts]
+# Only public/ is static. Until 2026-10-19 every file sat at the deployment root with
+# outputDirectory ".", so the paid course PDFs at api/_full/ were static URLs and the
+# /api/_full/ redirect matched the raw path only: /api/%5Ffull/king_lear_course.pdf,
+# /api/_full%2F... and /api/_full/<f>/ each served the PDF (curl, 200). Static files now go
+# up under public/; api/ and a root copy of offer.json (required by api/_lib.js) stay outside.
+def upload_names(rel):
+    if rel.parts[0] == "api" or str(rel) == "vercel.json":
+        return [str(rel)]
+    return ["public/" + str(rel), str(rel)]
+
+
+paths = [(p, name) for p in sorted(SITE.rglob("*"))
+         if p.is_file() and not p.name.startswith(".") and "_full" not in p.parts
+         for name in upload_names(p.relative_to(SITE))]
 for src, dst in (("king_lear_course.pdf", "king_lear_course.pdf"), ("cover.pdf", "cover.pdf"),
                  ("hamlet_course.pdf", "hamlet_course.pdf"), ("cover_hamlet.pdf", "cover_hamlet.pdf")):
     assert (ROOT / "private" / src).exists(), f"private/{src} missing: run scripts/build_edition.sh <play>"
@@ -38,7 +50,7 @@ files = [upload(p, rel) for p, rel in paths]
 print(f"uploaded {len(files)} files")
 d = requests.post(f"{API}/v13/deployments?teamId={TEAM}&forceNew=1", headers=H, json={
     "name": PROJECT, "project": PROJECT, "target": "production", "files": files,
-    "projectSettings": {"framework": None, "buildCommand": "echo build", "outputDirectory": ".", "installCommand": "echo skip"},
+    "projectSettings": {"framework": None, "buildCommand": "echo build", "outputDirectory": "public", "installCommand": "echo skip"},
 }).json()
 print("deployment", d.get("id"), d.get("readyState"), d.get("error"))
 if not d.get("id"):

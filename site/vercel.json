@@ -1,4 +1,5 @@
 {
+  "outputDirectory": "public",
   "functions": {
     "api/download.js": {
       "includeFiles": "api/_full/**"
