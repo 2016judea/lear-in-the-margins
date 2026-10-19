@@ -42,6 +42,7 @@ non-commercial at https://aidanjude.vercel.app/king-lear-annotated.
 ./scripts/build_edition.sh hamlet   # private/hamlet_course.pdf (133 pp) + site/hamlet/sample.pdf + site/img/hamlet/
 python3 scripts/build_for_pages.py  # site/r/<token>.json from the gitignored outreach ledger
 VERCEL_TOKEN=... python3 scripts/deploy.py
+node --test test/*.test.js        # the paywall functions, no network
 ```
 
 `build_edition.sh` fails if any hand-located anchor scores under 0.75 on the Moby text.

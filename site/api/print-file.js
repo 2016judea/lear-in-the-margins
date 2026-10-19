@@ -14,7 +14,11 @@ for (const [p, P] of Object.entries(PLAYS)) {
 
 module.exports = (req, res) => {
   const f = String(req.query.f || ""), exp = Number(req.query.exp || 0), sig = String(req.query.sig || "");
-  const want = crypto.createHmac("sha256", process.env.ACCESS_SECRET || "").update(`print:${f}:${exp}`).digest("hex");
+  const secret = process.env.ACCESS_SECRET;
+  // No secret means no valid link can exist. Signing under "" instead would accept a
+  // link anyone can forge, and serve the paid PDF on a misconfigured deploy.
+  if (!secret) { console.error("[print-file] ACCESS_SECRET is not set"); return res.status(403).json({ error: "bad or expired link" }); }
+  const want = crypto.createHmac("sha256", secret).update(`print:${f}:${exp}`).digest("hex");
   if (!FILES[f] || !(exp > Date.now() / 1000) || sig.length !== want.length || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(want)))
     return res.status(403).json({ error: "bad or expired link" });
   res.setHeader("Content-Type", "application/pdf");
