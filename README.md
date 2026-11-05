@@ -27,7 +27,7 @@ is the shop around it.
 | Milton (24 marks, 15 of them words he wrote) | located by eye in the same Free Library Folio, pp. 152-156 and 257-282; mostly corrections of the Folio's misprints ("morn" for "day", "Pelican" for "Politician") | sellable |
 | Keats (19 underlinings) | read by eye from Houghton's IIIF digitization of his own 1814-18 *Dramatic Works* vol. 7 (pages Houghton labels "[contains marginalia]"); five of them also named in Spurgeon 1928 pp. 27-28 | sellable; no image reproduced |
 | Melville | MMO, same volume | not in the paid edition; the MMO draft now asks for Hamlet too |
-| anyone else | `~/Desktop/marginalia-corpus` holds no other clean Hamlet reader: Melville (no licence) and Beckett (in copyright until ~2059) are its only Shakespeare markers | none |
+| anyone else | `~/Desktop/workspace/marginalia-corpus` holds no other clean Hamlet reader: Melville (no licence) and Beckett (in copyright until ~2059) are its only Shakespeare markers | none |
 
 Marks live in the pipeline repo, `examples/<play>/annotators.json`, anchored by text; every
 Hamlet anchor scored 1.00 except one at 0.91, and every marked page was checked rendered.

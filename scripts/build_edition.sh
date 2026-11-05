@@ -7,7 +7,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 PLAY="${1:-lear}"
-SM="${SM_DIR:-$HOME/Desktop/shakespeare-marginalia}"
+SM="${SM_DIR:-$HOME/Desktop/workspace/shakespeare-marginalia}"
 [ -d "$SM" ] || git clone -q https://github.com/2016judea/shakespeare-marginalia "$SM"
 cfg() { python3 -c "import json,sys;print(json.load(open('plays.json'))['$PLAY']['$1'])"; }
 MOBY=$(cfg moby); TITLE=$(cfg title); PDF=$(cfg pdf); SAMPLE=$(cfg sample_pages); DIR=$(cfg site_dir)
